@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cats</title>
+  <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <header>
+    <nav class="navbar navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Navbar</a>
+      </div>
+    </nav>
+  </header>
+  
+  <div class="container">
+    <%= message %>
+
+    <ul>
+      <% for (let i = 0; i < data.length; i ++) { %>
+      <li><%= data[i].firstName %> - <%= data[i].lastName %></li>
+      <% } %>
+    </ul> 
+  </div>
+  
+  <script src="/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>
