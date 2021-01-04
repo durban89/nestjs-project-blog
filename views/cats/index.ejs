@@ -1,33 +1,81 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Cats</title>
   <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="/static/style.css" rel="stylesheet" />
 </head>
 
 <body>
   <header>
     <nav class="navbar navbar-light bg-light">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">Navbar</a>
+        <a class="navbar-brand" href="#">Cats</a>
       </div>
     </nav>
   </header>
   
-  <div class="container">
-    <%= message %>
+  <div class="container" id='app'>
+    
 
-    <ul>
-      <% for (let i = 0; i < data.length; i ++) { %>
-      <li><%= data[i].firstName %> - <%= data[i].lastName %></li>
-      <% } %>
-    </ul> 
+    <div class="row">
+      <form class="form form-inline mb-3 col-md-3">
+        <div class="mb-3">
+          <label for="firstName" class="form-label">FirstName:</label>
+          <input class="form-control" type="input" v-model='firstName' id="firstName" />
+        </div>
+        <div class="mb-3">
+          <label for="lastName" class="form-label">LastName:</label>
+          <input class="form-control" type="input" v-model='lastName' id="lastName">
+        </div>
+        <button class="btn btn-primary btn-sm" type="button" @click='add'>添加Cat</button>
+      </form>
+    </div>
+
+    <div class="card">
+      <h5 class="card-header"> <%= message %></h5>
+      <ul class="list-group list-group-flush">
+        <% for (let i = 0; i < data.length; i ++) { %>
+        <li class="list-group-item"><%= data[i].firstName %> - <%= data[i].lastName %></li>
+        <% } %>
+      </ul> 
+    </div>
   </div>
   
   <script src="/bootstrap/js/bootstrap.min.js"></script>
+  <script src="/vue/vue.min.js"></script>
+  <script src="/axios/axios.min.js"></script>
+  <script>
+    new Vue({
+      el: '#app',
+      data: {
+        firstName: '',
+        lastName: '',
+      },
+      created: function() {
+        console.log('aaa');
+      },
+      methods: {
+        add: function() {
+          var self = this;
+          
+          axios.post('/cats/create', {
+            firstName: self.firstName,
+            lastName: self.lastName
+          })
+          .then(function (response) {
+            window.location.reload();
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+        }
+      }
+    })
+  </script>
 </body>
 
 </html>
