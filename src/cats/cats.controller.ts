@@ -8,25 +8,28 @@ export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Get('/index')
-  index(@Res() res: Response): string {
-    this.catsService.findAll();
-
+  async index(@Res() res: Response) {
     var cats: Promise<Cats[]> = this.catsService.findAll();
 
-    cats
-      .then((data) => {
-        console.log(data);
+    const data = await cats;
 
-        return res.render('cats/index', {
-          message: 'Cats',
-          data: data,
-        });
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    return res.render('cats/index', {
+      message: 'Cats',
+      data: data,
+    });
+  }
 
-    return '';
+  @Get('/item')
+  async item() {
+    var cats: Promise<Cats[]> = this.catsService.findAll();
+
+    const data = await cats;
+
+    return {
+      status: true,
+      code: '',
+      data: data,
+    };
   }
 
   @Post('/create')
