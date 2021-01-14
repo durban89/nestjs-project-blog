@@ -23,13 +23,16 @@ export class CatsController {
   async item() {
     var cats: Promise<Cats[]> = this.catsService.findAll();
 
-    const data = await cats;
-
-    return {
-      status: true,
-      code: '',
-      data: data,
-    };
+    try {
+      const data = await cats;
+      return {
+        status: true,
+        code: '',
+        data: data,
+      };
+    } catch (err) {
+      console.log(err);
+    }
   }
 
   @Post('/create')

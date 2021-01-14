@@ -22,7 +22,7 @@ export class CatsService {
     await this.catsRepository.delete(id);
   }
 
-  async create(cats: Cats): Promise<void> {
-    await this.catsRepository.save(cats);
+  async create(cats: Cats): Promise<Cats> {
+    return await this.catsRepository.save(cats);
   }
 }
